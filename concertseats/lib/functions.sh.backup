@@ -1,0 +1,129 @@
+#!/bin/bash
+# lib/functions.sh – all functions for Concert Ticket Counter
+DATA="data/seats.txt"
+
+LOG="logs/activity.log"
+
+# write one line to the activity log
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') | $*" >> "$LOG"
+}
+
+# check the data file / folder exists before using it
+check_data() {
+    if [ ! -e "$DATA" ]; then
+        echo "Data not found: $DATA"
+        return 1
+    fi
+}
+
+show_help() {
+    echo "Usage: ./main.sh            -> open the menu"
+    echo "       ./main.sh --help     -> show this help"
+    echo "       ./main.sh --backup   -> backup data/ now"
+    echo "       ./main.sh --cron     -> run the scheduled (crontab) task"
+}
+
+view_data() {
+    check_data || return
+    if [ -d "$DATA" ]; then ls -l "$DATA"; else cat -n "$DATA" | more; fi
+}
+
+do_backup() {
+    f="backups/data_$(date +%Y%m%d_%H%M%S).tar.gz"
+    tar -czf "$f" data/
+    echo "Backup saved: $f ($(du -h "$f" | cut -f1))"
+    log "backup created $f"
+}
+
+view_log() {
+    if [ -f "$LOG" ]; then tail -n 15 "$LOG"; else echo "No activity yet."; fi
+}
+
+# ------------------------------------------------------------
+# FEATURE 1: Show the seat map (booked seats marked X)
+# Commands you can use: arrays, for loop, case, sed -i, bc, printf
+# ------------------------------------------------------------
+feature_1() {
+    echo "== Show the seat map (booked seats marked X) =="
+    echo "TODO: write the code for this feature (see your project guide, Step 3)."
+    # ---- example to start from (remove the # and change it) ----
+    # read -p "Enter seat to change: " key
+    # if ! grep -q "^$key," "$DATA"; then echo "Not found"; return; fi
+    # # change the last column of that row (example)
+    # sed -i "/^$key,/s/[^,]*$/NEW_VALUE/" "$DATA"
+    # echo "Updated:"; grep "^$key," "$DATA"
+    log "feature_1 used"
+}
+
+# ------------------------------------------------------------
+# FEATURE 2: Book a seat if it is free
+# Commands you can use: arrays, for loop, case, sed -i, bc, printf
+# ------------------------------------------------------------
+feature_2() {
+    echo "== Book a seat if it is free =="
+    echo "TODO: write the code for this feature (see your project guide, Step 4)."
+    # ---- example to start from (remove the # and change it) ----
+    # read -p "Enter seat: " v1
+    # read -p "Enter category: " v2
+    # # ...ask for every column: seat, category, status
+    # if [ -z "$v1" ]; then echo "Value cannot be empty"; return; fi
+    # echo "$v1,$v2" >> "$DATA"        # add all 3 values in the same order as the header
+    # echo "Saved!"
+    log "feature_2 used"
+}
+
+# ------------------------------------------------------------
+# FEATURE 3: Cancel a booking
+# Commands you can use: arrays, for loop, case, sed -i, bc, printf
+# ------------------------------------------------------------
+feature_3() {
+    echo "== Cancel a booking =="
+    echo "TODO: write the code for this feature (see your project guide, Step 5)."
+    # ---- example to start from (remove the # and change it) ----
+    # read -p "Enter seat to change: " key
+    # if ! grep -q "^$key," "$DATA"; then echo "Not found"; return; fi
+    # # change the last column of that row (example)
+    # sed -i "/^$key,/s/[^,]*$/NEW_VALUE/" "$DATA"
+    # echo "Updated:"; grep "^$key," "$DATA"
+    log "feature_3 used"
+}
+
+# ------------------------------------------------------------
+# FEATURE 4: Show revenue by category using bc
+# Commands you can use: arrays, for loop, case, sed -i, bc, printf
+# ------------------------------------------------------------
+feature_4() {
+    echo "== Show revenue by category using bc =="
+    echo "TODO: write the code for this feature (see your project guide, Step 6)."
+    # ---- example to start from (remove the # and change it) ----
+    # # example: total and average of column 3 (status); change $3 if you need another column
+    # awk -F',' 'NR>1 { sum += $3; n++ }
+    # END { if (n>0) printf "Total: %.2f  Average: %.2f\n", sum, sum/n }' "$DATA"
+    # # for decimals in bash use bc, e.g.: echo "scale=2; 45/60" | bc
+    log "feature_4 used"
+}
+
+# ------------------------------------------------------------
+# FEATURE 5: Show a SOLD OUT message when all seats are booked
+# Commands you can use: arrays, for loop, case, sed -i, bc, printf
+# ------------------------------------------------------------
+feature_5() {
+    echo "== Show a SOLD OUT message when all seats are booked =="
+    echo "TODO: write the code for this feature (see your project guide, Step 7)."
+    # ---- example to start from (remove the # and change it) ----
+    # read -p "Search for: " word
+    # grep -i "$word" "$DATA" || echo "Nothing found"
+    # # or show selected columns: awk -F',' '{ print $1, $2 }' "$DATA"
+    log "feature_5 used"
+}
+
+# ------------------------------------------------------------
+# CRON TASK: Every hour, save the booked-seat count to reports/sales_log.txt
+# Runs when crontab calls:  ./main.sh --cron
+# ------------------------------------------------------------
+cron_task() {
+    # TODO: write the code for the scheduled task here (Step 10 of your guide)
+    echo "$(date '+%Y-%m-%d %H:%M') cron task ran" >> reports/cron_output.txt
+    log "cron task ran"
+}

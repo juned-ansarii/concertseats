@@ -1,0 +1,5 @@
+2026-10-28 20:17:08 | Total: 3 | Booked: 1 | Available: 2
+2026-10-28 20:44:25 | Total: 30 | Booked: 1 | Available: 29
+2026-10-28 21:00:01 | Total: 30 | Booked: 2 | Available: 28
+2026-10-29 03:00:01 | Total: 30 | Booked: 2 | Available: 28
+2026-10-29 04:00:01 | Total: 30 | Booked: 2 | Available: 28
